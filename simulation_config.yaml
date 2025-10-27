@@ -1,0 +1,57 @@
+# This file contains configs required to run simulation for hosting capacity
+file_config:
+  path: "/full_path/folder_with_feeder_data"  # should contain all circuit and time series data
+  name: "Master.dss"
+  processed: True  # True if files have already been processed for running in open dss
+  converted: True  # True if files are already in open dss format
+  timezone: "US/Eastern"
+
+circuit_config:
+  feeder_name: name
+  secondary_circuit_present: False  # load is not scaled if True
+  frequency: 60
+  phases: 3
+  balanced: False
+
+analysis_config:
+  voltage_deviation: 0.05  # per unit
+  report_thermal_overload: True
+  report_voltage_exception: True
+  load_randomization: True
+  solar_randomization: True
+  max_iterations: 1000
+  solve_frequency: 60  # minutes
+  simulation_length: 24  # hours
+  initial_power_factor: 0.95
+  min_power_factor: 0.9
+  max_power_factor: 0.98
+  day_of_year: 0
+  num_of_days: 1
+  maximize_pv_iterations: 25
+  monte_carlo_sims: 100
+
+data_config:
+  customer_load_data: "load.csv"
+  customer_solar_data: "solar_power_allocation.csv"
+  solar_peak_profile: "solar_profile_peak_day.csv"
+  feeder_to_home_mapping: "customer_mapping.xlsx"  # used to scale based on num homes
+  customer_load_population: "all_samples_ami_data.csv"
+
+pv_config:
+  power_rating: 10 #kVA
+  max_power_output: 10  #kW
+  irradiance: 1
+  power_factor: 1  # unity
+  v_max_pu: 1.5
+  v_min_pu: 1.0
+  cut_in: 0.01
+  cut_out: 0.05
+#
+inverter_config:  
+  xcurve: [0.0, 0.91, 0.97, 1.00, 1.03, 1.09]
+  ycurve: [0.44, 0.44, 0, 0, 0, -0.44]
+  setting: voltvar
+  delta_p: 0.1
+  deltav_tolerance: 0.0001
+  deltavar_tolerance: 0.1
+  enabled: True
